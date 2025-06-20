@@ -1,0 +1,32 @@
+# Local .terraform directory (provider plugins, local state cache)
+.terraform/
+
+# Terraform state files (sensitive, do NOT commit)
+terraform.tfstate
+terraform.tfstate.backup
+
+# Variable override files (can contain secrets)
+*.tfvars
+*.tfvars.json
+
+# Sensitive credential files (like AWS CLI credentials)
+*.pem
+*.key
+*.crt
+
+# Editor/IDE junk
+.vscode/
+.idea/
+*.swp
+.DS_Store
+*.log
+
+# OS-specific
+Thumbs.db
+ehthumbs.db
+
+# macOS system files
+__MACOSX/
+
+terraform.lock.hcl
+versions.tf
