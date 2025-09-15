@@ -3,7 +3,7 @@ provider "aws" {
 }
 
 # module "vpc" {
-#   source = "../../modules/vpc"
+#   source = "../../modules/network/vpc"
 
 #   vpc_name = var.vpc_name
 #   vpc_cidr = var.vpc_cidr
@@ -14,12 +14,12 @@ provider "aws" {
 # }
 
 module "sns" {
-  source = "../../modules/SNS"
+  source = "../../modules/miscellaneous_services/sns"
 }
 
 module "budgets" {
   # source
-  source = "../../modules/budgets"
+  source = "../../modules/billing_cost_budget/budgets"
 
   # variables 
   monthly_budget_name = var.monthly_budget_name
