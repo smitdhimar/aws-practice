@@ -3,8 +3,10 @@ provider "aws" {
 }
 
 # module "vpc" {
+# source
 #   source = "../../modules/network/vpc"
 
+# variables
 #   vpc_name = var.vpc_name
 #   vpc_cidr = var.vpc_cidr
 #   public_cidr = var.public_cidr
@@ -14,6 +16,7 @@ provider "aws" {
 # }
 
 module "sns" {
+  # source
   source = "../../modules/miscellaneous_services/sns"
 }
 
@@ -28,3 +31,30 @@ module "budgets" {
   limit_cost_currency = var.limit_cost_currency
   budget_alerts_arn   = module.sns.budget_alerts_arn
 }
+
+module "lambda" {
+  # source
+  source = "../../modules/compute/lambda"
+
+  # variables
+  crud_handler_name = var.crud_handler_name
+  environment       = var.environment
+  project_name      = var.project_name
+  runtime           = var.runtime
+}
+
+# module "dynamoDB" {
+#   # source
+#   source = "../../modules/storage/dynamoDB"
+
+#   # variables
+
+# }
+
+# module "api_gateway" {
+#   # source
+#   source = "../../modules/miscellaneous_services/api_gateway"
+
+#   # variables
+
+# }
