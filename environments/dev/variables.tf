@@ -54,3 +54,14 @@ variable "limit_cost_currency" {
   description = "the currency of cost"
   type        = string
 }
+
+# lambda
+# ___________________________________________________________
+variable "crud_handler_name" {
+  description = "the name of the crud handler"
+  type        = string
+}
+variable "runtime" {
+  description = "the runtime , either java or node js "
+  type        = string
+}

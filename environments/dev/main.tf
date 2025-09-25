@@ -15,11 +15,12 @@ provider "aws" {
 #   environment = var.environment
 # }
 
+# sns
 module "sns" {
   # source
   source = "../../modules/miscellaneous_services/sns"
 }
-
+# budget
 module "budgets" {
   # source
   source = "../../modules/billing_cost_budget/budgets"
@@ -31,7 +32,7 @@ module "budgets" {
   limit_cost_currency = var.limit_cost_currency
   budget_alerts_arn   = module.sns.budget_alerts_arn
 }
-
+# lambda functions
 module "lambda" {
   # source
   source = "../../modules/compute/lambda"
@@ -42,7 +43,7 @@ module "lambda" {
   project_name      = var.project_name
   runtime           = var.runtime
 }
-
+# dynamo db
 # module "dynamoDB" {
 #   # source
 #   source = "../../modules/storage/dynamoDB"
@@ -51,10 +52,14 @@ module "lambda" {
 
 # }
 
-# module "api_gateway" {
-#   # source
-#   source = "../../modules/miscellaneous_services/api_gateway"
+# api gateway
+module "api_gateway" {
+  # source
+  source = "../../modules/miscellaneous_services/api_gateway"
 
-#   # variables
-
-# }
+  # variables
+  environment = var.environment
+  project_name = var.project_name
+  lambda_functions_map = module.lambda.lambda_functions_map
+  crud_handler_name = var.crud_handler_name
+}
