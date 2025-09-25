@@ -38,7 +38,6 @@ resource "aws_lambda_function" "crud_handler" {
   timeout          = 180
   publish          = true
   source_code_hash = data.archive_file.archive_lambdas[var.crud_handler_name].output_base64sha256
-  skip_destroy     = false
 
   # layers that the lambda function depends on
   layers     = [aws_lambda_layer_version.layers["common_helper_functions"].arn]
@@ -109,5 +108,4 @@ resource "aws_lambda_layer_version" "layers" {
   filename            = data.archive_file.arhive_layers[each.key].output_path
   source_code_hash    = data.archive_file.arhive_layers[each.key].output_base64sha256
   compatible_runtimes = ["nodejs20.x"]
-  skip_destroy        = false # removes the zip file from the folder structure once the deployment is complete
 }
