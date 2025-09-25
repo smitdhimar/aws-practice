@@ -4,12 +4,13 @@ const default_headers = {
     "Access-Control-Allow-Credentials": true
 }
 
-function make_request(status_code, body = null, headers = {}) {
+export const make_respones = (status_code, body = null, headers = {}) => {
+
+    console.log(status_code)
+    console.log(body)
     return {
-        status_code,
+        statusCode: status_code,
         headers: { ...default_headers, ...headers },
         body: body === null ? "" : (typeof body === "string" ? body : JSON.stringify(body))
     }
 }
-
-module.exports = { make_request };
