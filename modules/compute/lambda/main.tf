@@ -1,7 +1,7 @@
 # locals
 locals {
   lambda_functions = [var.crud_handler_name]
-  layers           = ["common_helper_functions"]
+  layers           = ["common_helper_functions", "package"]
 }
 
 # Function archive
@@ -40,8 +40,8 @@ resource "aws_lambda_function" "crud_handler" {
   source_code_hash = data.archive_file.archive_lambdas[var.crud_handler_name].output_base64sha256
 
   # layers that the lambda function depends on
-  layers     = [aws_lambda_layer_version.layers["common_helper_functions"].arn]
-  depends_on = [aws_lambda_layer_version.layers["common_helper_functions"]]
+  layers     = [aws_lambda_layer_version.layers["common_helper_functions"].arn, aws_lambda_layer_version.layers["package"].arn]
+  depends_on = [aws_lambda_layer_version.layers["common_helper_functions"], aws_lambda_layer_version.layers["package"]]
 
   tracing_config {
     mode = "Active"
@@ -86,7 +86,8 @@ resource "aws_iam_policy" "lambda_handler_iam_policy" {
         ]
         Resource = [
           "arn:aws:logs:*:*:*",
-          "arn:aws:lambda:*:*:layer:common_helper_functions:*"
+          "arn:aws:lambda:*:*:layer:common_helper_functions:*",
+          "arn:aws:lambda:*:*:layer:package:*"
         ]
         Effect = "Allow"
       }
