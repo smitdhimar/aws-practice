@@ -10,7 +10,7 @@ data "archive_file" "archive_lambdas" {
 
   type        = "zip"
   source_dir  = "${path.module}/functions/${each.key}"
-  output_path = "${path.module}/function/${each.key}.zip"
+  output_path = "${path.module}/functions/${each.key}.zip"
   excludes    = ["**/*.zip"]
 }
 
@@ -91,7 +91,6 @@ resource "aws_iam_policy" "lambda_handler_iam_policy" {
         Effect = "Allow"
       }
     ]
-
   })
 }
 # policy attachment
