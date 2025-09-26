@@ -53,7 +53,6 @@ module "dynamoDB" {
   project_name = var.project_name
   user_data_table_name = var.user_data_table_name
 }
-
 # api gateway
 module "api_gateway" {
   # source
@@ -64,4 +63,11 @@ module "api_gateway" {
   project_name = var.project_name
   lambda_functions_map = module.lambda.lambda_functions_map
   crud_handler_name = var.crud_handler_name
+}
+# resource explorer
+module "resource_exporer"{
+  # source
+  source = "../../modules/miscellaneous_services/resource_explorer"
+
+  # variable
 }
