@@ -5,12 +5,27 @@ locals {
         {
           route        = "/crud/health"
           http_method  = "GET"
-          is_protected = "false"
+          is_protected = false
         },
         {
           route        = "/crud/user/{id}"
           http_method  = "GET"
-          is_protected = "false"
+          is_protected = false
+        },
+        {
+          route        = "/crud/user/{id}"
+          http_method  = "PUT"
+          is_protected = false
+        },
+        {
+          route        = "/crud/user"
+          http_method  = "POST"
+          is_protected = false
+        },
+        {
+          route        = "/crud/user/{id}"
+          http_method  = "DELETE"
+          is_protected = false
         }
       ]
     }
