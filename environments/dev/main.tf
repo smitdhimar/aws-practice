@@ -44,13 +44,15 @@ module "lambda" {
   runtime           = var.runtime
 }
 # dynamo db
-# module "dynamoDB" {
-#   # source
-#   source = "../../modules/storage/dynamoDB"
+module "dynamoDB" {
+  # source
+  source = "../../modules/storage/dynamoDB"
 
-#   # variables
-
-# }
+  # variables
+  environment = var.environment
+  project_name = var.project_name
+  user_data_table_name = var.user_data_table_name
+}
 
 # api gateway
 module "api_gateway" {

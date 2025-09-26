@@ -65,3 +65,10 @@ variable "runtime" {
   description = "the runtime , either java or node js "
   type        = string
 }
+
+# Dynamo DB
+# ______________________________________________________________
+variable "user_data_table_name" {
+  description = "The name user data table"
+  type        = string
+}
