@@ -6,6 +6,11 @@ locals {
           route        = "/crud/health"
           http_method  = "GET"
           is_protected = "false"
+        },
+        {
+          route        = "/crud/user/{id}"
+          http_method  = "GET"
+          is_protected = "false"
         }
       ]
     }
@@ -25,7 +30,7 @@ locals {
     for p in flatten([
       for handler_name, handler_obj in local.lambda_with_mappings : [
         for route in handler_obj.routes : {
-          key = "${handler_name}_${route.http_method}${replace(route.route, "/", "")}"
+          key = "${handler_name}_${route.http_method}${replace(route.route, "/", "_")}"
           value = {
             route        = route.route
             handler      = handler_name
