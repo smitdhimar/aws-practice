@@ -7,6 +7,10 @@ variable "environment" {
   description = "environment"
   type        = string
 }
+variable "region" {
+  description = "region"
+  type = string
+}
 
 variable "project_name" {
   description = "name of the project"
@@ -19,4 +23,8 @@ variable "runtime" {
     condition     = contains(["nodejs18.x", "java21"], var.runtime)
     error_message = "runtime must be 'nodejs18.x' or 'java21'"
   }
+}
+variable "user_table_name" {
+  description = "user table name"
+  type        = string
 }

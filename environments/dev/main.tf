@@ -42,6 +42,8 @@ module "lambda" {
   environment       = var.environment
   project_name      = var.project_name
   runtime           = var.runtime
+  region            = var.region
+  user_table_name   = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
 }
 # dynamo db
 module "dynamoDB" {
@@ -49,8 +51,8 @@ module "dynamoDB" {
   source = "../../modules/storage/dynamoDB"
 
   # variables
-  environment = var.environment
-  project_name = var.project_name
+  environment          = var.environment
+  project_name         = var.project_name
   user_data_table_name = var.user_data_table_name
 }
 # api gateway
@@ -59,13 +61,13 @@ module "api_gateway" {
   source = "../../modules/miscellaneous_services/api_gateway"
 
   # variables
-  environment = var.environment
-  project_name = var.project_name
+  environment          = var.environment
+  project_name         = var.project_name
   lambda_functions_map = module.lambda.lambda_functions_map
-  crud_handler_name = var.crud_handler_name
+  crud_handler_name    = var.crud_handler_name
 }
 # resource explorer
-module "resource_exporer"{
+module "resource_exporer" {
   # source
   source = "../../modules/miscellaneous_services/resource_explorer"
 

@@ -49,7 +49,8 @@ resource "aws_lambda_function" "crud_handler" {
 
   environment {
     variables = {
-
+      USER_TABLE_NAME = var.user_table_name
+      REGION          = var.region
     }
   }
 }
