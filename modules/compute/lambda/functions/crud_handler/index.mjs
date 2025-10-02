@@ -5,6 +5,7 @@ import {
 import {
     health_check,
     create_user,
+    get_user,
 } from './crud_functions.mjs'
 export const handler = async (event) => {
     try {
@@ -16,9 +17,14 @@ export const handler = async (event) => {
             pathParameters: path_parameters,
             queryStringParameters: query_string_parameters
         } = event;
-
+        console.log("path: ", path)
+        console.log("http_method: ", http_method)
+        console.log("_body: ", _body)
+        console.log("path_parameters: ", path_parameters)
+        console.log("query_string_parameters: ", query_string_parameters)
         const path_action = get_path_action(http_method, path);
-        const body = _body.length > 0 ? JSON.parse(_body) : null;
+        console.log(path_action)
+        const body = _body?.length > 0 ? JSON.parse(_body) : null;
 
         switch (path_action) {
             case "HEALTH":
@@ -28,10 +34,13 @@ export const handler = async (event) => {
                 return create_user(body);
                 break;
             case "GET_USER":
+                console.log(path_parameters)
+                return get_user(path_parameters?.id)
                 break;
             case "UPDATE_USER":
                 break;
             case "DELETE_USER":
+                return delete_user(path_parameters?.id)
                 break;
             default:
                 return make_response(404)

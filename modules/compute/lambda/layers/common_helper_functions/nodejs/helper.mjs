@@ -14,9 +14,10 @@ export const make_response = (status_code, body = null, headers = {}) => {
 
 export const get_path_action = (http_method, path) =>{
     if(!http_method || !path) return "UNKNOWN";
-    if(http_method==="GET" || path === '/crud/health') return "HEALTH";
-    if(http_method=== "POST" || path === '/crud/user') return "CREATE_USER";
-    if(http_method === "GET" || path === '/crud/user/{id}') return "GET_USER";
-    if(http_method === "PUT" || path === 'crud/user/{id}') return "UPDATE_USER";
-    if(http_method === "DELETE" || path === 'crud/user/{id}') return "DELETE_USER";
+    if(http_method==="GET" && path === '/crud/health') return "HEALTH";
+    if(http_method=== "POST" && path === '/crud/user') return "CREATE_USER";
+    if(http_method === "GET" && path === '/crud/user/{id}') return "GET_USER";
+    if(http_method === "PUT" && path === 'crud/user/{id}') return "UPDATE_USER";
+    if(http_method === "DELETE" && path === 'crud/user/{id}') return "DELETE_USER";
+    return "UNKNOWN"
 }
