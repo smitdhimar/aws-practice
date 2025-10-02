@@ -52,15 +52,10 @@ resource "aws_iam_role_policy_attachment" "role_policy_attachment" {
 resource "aws_dynamodb_table" "user_data_table" {
   name         = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
   billing_mode = "PAY_PER_REQUEST"
-  hash_key     = "user_id"
-  range_key    = "id"
+  hash_key     = "id"
 
   attribute {
     name = "name"
-    type = "S"
-  }
-  attribute {
-    name = "user_id"
     type = "S"
   }
   attribute {

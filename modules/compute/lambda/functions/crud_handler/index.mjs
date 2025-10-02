@@ -6,6 +6,7 @@ import {
     health_check,
     create_user,
     get_user,
+    delete_user
 } from './crud_functions.mjs'
 export const handler = async (event) => {
     try {
@@ -43,7 +44,7 @@ export const handler = async (event) => {
                 return delete_user(path_parameters?.id)
                 break;
             default:
-                return make_response(404)
+                return make_response(404, {"message": "No path found"})
                 break;
         }
 
