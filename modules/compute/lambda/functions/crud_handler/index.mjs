@@ -42,6 +42,7 @@ export const handler = async (event) => {
             "message": "Successful"
         });
     } catch (error) {
+        console.log("in catch block")
         console.log(`🔴 ${error?.message || error}`);
         return make_response(500, {
             "message": "Internal server error",

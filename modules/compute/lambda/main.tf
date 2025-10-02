@@ -32,7 +32,7 @@ data "archive_file" "arhive_layers" {
 resource "aws_lambda_function" "crud_handler" {
   function_name    = "${var.crud_handler_name}-${var.project_name}-${var.environment}"
   handler          = var.runtime == "java21" ? "com.example.Handler::handleRequest" : "index.handler"
-  role             = aws_iam_role.lambda_handler_execution_role.arn
+  role             = var.dynamo_db_iam_role.arn
   runtime          = var.runtime
   filename         = data.archive_file.archive_lambdas[var.crud_handler_name].output_path
   timeout          = 180
@@ -100,7 +100,10 @@ resource "aws_iam_role_policy_attachment" "lambda_default_policy_attachment" {
   role       = aws_iam_role.lambda_handler_execution_role.name
   policy_arn = aws_iam_policy.lambda_handler_iam_policy.arn
 }
-
+resource "aws_iam_role_policy_attachment" "dynamo_db_role_for_logs" {
+  role = var.dynamo_db_iam_role.name
+  policy_arn = aws_iam_policy.lambda_handler_iam_policy.arn
+}
 # Layers
 resource "aws_lambda_layer_version" "layers" {
   for_each = toset(local.layers)

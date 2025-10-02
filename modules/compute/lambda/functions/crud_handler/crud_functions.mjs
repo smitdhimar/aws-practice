@@ -41,6 +41,10 @@ export const create_user =async (body) => {
             "Id" : body.id
         })
     } catch (error) {
+        console.log(error?.message || error)
         throw new Error(error?.message || error);
     }
+}
+export const get_user = async (id) =>{
+    
 }

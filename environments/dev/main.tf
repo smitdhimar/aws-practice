@@ -44,6 +44,7 @@ module "lambda" {
   runtime           = var.runtime
   region            = var.region
   user_table_name   = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
+  dynamo_db_iam_role = module.dynamoDB.dynamo_db_iam_role
 }
 # dynamo db
 module "dynamoDB" {

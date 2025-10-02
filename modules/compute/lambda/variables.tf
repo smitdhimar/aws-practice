@@ -9,7 +9,7 @@ variable "environment" {
 }
 variable "region" {
   description = "region"
-  type = string
+  type        = string
 }
 
 variable "project_name" {
@@ -27,4 +27,11 @@ variable "runtime" {
 variable "user_table_name" {
   description = "user table name"
   type        = string
+}
+variable "dynamo_db_iam_role" {
+  description = "arn of iam role for executing dynamo db"
+  type = object({
+    name = string
+    arn  = string
+  })
 }
