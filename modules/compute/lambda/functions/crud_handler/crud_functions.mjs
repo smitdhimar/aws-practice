@@ -8,7 +8,8 @@ import {
     DynamoDBDocumentClient,
     PutCommand,
     GetCommand,
-    DeleteCommand
+    DeleteCommand,
+    UpdateCommand
 } from '@aws-sdk/lib-dynamodb'
 
 const user_table_name = process.env.USER_TABLE_NAME;
@@ -85,9 +86,34 @@ export const delete_user = async (id) => {
         throw new Error(error?.message || error)
     }
 }
-export const update_user = async (id) => {
+export const update_user = async (id, body) => {
     try {
-        console.log(id)
+        const update_expession = Object.keys(body)?.map((key)=> `#${key} = :${key}`)?.join(", ")
+        const expression_attribute_names = Object.keys(body)?.reduce((acc,key)=> {
+            acc[`#${key}`]= key;
+            return acc;
+        }, {})
+        const expression_attribute_values = Object.keys(body)?.reduce((acc, key)=>{
+            acc[`:${key}`] = body[key];
+            return acc;
+        }, {})
+
+        const command = new UpdateCommand({
+            TableName: user_table_name,
+            Key: {id},
+            UpdateExpression: `SET ${update_expession}`,
+            ExpressionAttributeNames: expression_attribute_names,
+            ExpressionAttributeValues: expression_attribute_values,
+            ReturnValues: "ALL_NEW"
+        })
+
+        const update_user_result= await doc_client.send(command)
+        console.log(update_user_result)
+        if(!update_user_result?.Attributes) return make_response(500, {"message":"Error in updating the user"});
+        return make_response(200, {
+            "message": "Updated successfully",
+            "body": update_user_result?.Attributes
+        })
     } catch (error) {
         console.log(error?.message || error)
         throw new Error(error?.message || error)

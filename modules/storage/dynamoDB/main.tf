@@ -11,7 +11,8 @@ resource "aws_iam_policy" "aws_iam_policy_for_dynamo_db" {
           "dynamodb:PutItem",
           "dynamodb:GetItem",
           "dynamodb:DeleteItem",
-          "dynamodb:Query"
+          "dynamodb:Query",
+          "dynamodb:UpdateItem"
         ]
         Resource = [
           "arn:aws:dynamodb:us-east-1:*:table/${var.user_data_table_name}-${var.project_name}-${var.environment}",

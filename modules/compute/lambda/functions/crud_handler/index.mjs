@@ -6,7 +6,8 @@ import {
     health_check,
     create_user,
     get_user,
-    delete_user
+    delete_user,
+    update_user
 } from './crud_functions.mjs'
 export const handler = async (event) => {
     try {
@@ -35,10 +36,10 @@ export const handler = async (event) => {
                 return create_user(body);
                 break;
             case "GET_USER":
-                console.log(path_parameters)
                 return get_user(path_parameters?.id)
                 break;
             case "UPDATE_USER":
+                return update_user(path_parameters?.id, body);
                 break;
             case "DELETE_USER":
                 return delete_user(path_parameters?.id)
