@@ -38,12 +38,12 @@ module "lambda" {
   source = "../../modules/compute/lambda"
 
   # variables
-  crud_handler_name = var.crud_handler_name
-  environment       = var.environment
-  project_name      = var.project_name
-  runtime           = var.runtime
-  region            = var.region
-  user_table_name   = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
+  crud_handler_name  = var.crud_handler_name
+  environment        = var.environment
+  project_name       = var.project_name
+  runtime            = var.runtime
+  region             = var.region
+  user_table_name    = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
   dynamo_db_iam_role = module.dynamoDB.dynamo_db_iam_role
 }
 # dynamo db
@@ -73,4 +73,19 @@ module "resource_exporer" {
   source = "../../modules/miscellaneous_services/resource_explorer"
 
   # variable
+}
+
+#EC2 instaces
+module "ec2" {
+  # source 
+  source = "../../modules/compute/ec2"
+
+  # variables
+  #globals
+  environment = var.environment
+  project_name = var.project_name
+  #demo instance
+  demo_instance_ami    = var.demo_instance_ami
+  demo_instance_prefix = var.demo_instance_prefix
+  demo_instance_type   = var.demo_instance_type
 }

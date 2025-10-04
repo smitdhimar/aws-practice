@@ -72,3 +72,19 @@ variable "user_data_table_name" {
   description = "The name user data table"
   type        = string
 }
+
+# EC2 instances
+#_______________________________________________________________
+#demo instance
+variable "demo_instance_ami" {
+  description = "The ami of demo instance"
+  type        = string
+}
+variable "demo_instance_prefix" {
+  description = "The prefix(name) of demo instance"
+  type        = string
+}
+variable "demo_instance_type" {
+  description = "The instance type of demo instance "
+  type        = string
+}
