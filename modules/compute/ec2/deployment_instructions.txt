@@ -1,0 +1,11 @@
+sudo yum update -y
+sudo amazon-linux-extras install docker -y
+sudo service docker start
+sudo usermod -aG docker ec2-user
+
+docker --version
+
+echo "<h1>Hello World from EC2 + Docker!</h1>" > index.html
+
+# 80 because 80 is the exposed port for http
+docker run -d -p 80:80 -v $(pwd)/index.html:/usr/share/nginx/html/index.html nginx

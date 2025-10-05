@@ -67,16 +67,13 @@ resource "aws_instance" "demo_instance" {
   vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
   key_name               = aws_key_pair.ec2_key_pair.key_name
 
-#   user_data = <<-EOF
-#                 #!/bin/bash
-#                 yum update -y
-#                 yum install -y httpd
-#                 systemctl start httpd
-#                 systemctl enable httpd
-#                 echo "<h1> hello world! </h1>" > /var/www/html/index.html
-#                 EOF
-
   tags = {
     Name = "${var.demo_instance_prefix}-${var.project_name}-${var.environment}"
   }
+}
+
+#instance state
+resource "aws_ec2_instance_state" "demo_instance_state" {
+  instance_id = aws_instance.demo_instance.id
+  state       = "running"
 }
