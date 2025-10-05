@@ -1,3 +1,8 @@
+# GET ip address
+data "http" "ip" {
+  url = "http://checkip.amazonaws.com"
+}
+
 # key pairs
 resource "tls_private_key" "my_key" {
   algorithm = "RSA"
@@ -14,13 +19,62 @@ resource "local_file" "ec2_pem_keys" {
 }
 
 # security groups
+resource "aws_security_group" "ec2_security_group" {
+  name        = "demo-instance-sg-${var.project_name}-${var.environment}"
+  description = "security group for aws ec2"
 
+  # inbound rules
+  ingress {
+    description = "to allow http request on port 80"
+    from_port   = 80
+    to_port     = 80
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "to allow https requests on port 443"
+    from_port   = 443
+    to_port     = 443
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  ingress {
+    description = "to allow http connection from local ip"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${chomp(data.http.ip.response_body)}/32"]
+  }
+  # outbound rules
+  egress {
+    description = "all outbound traffic"
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+  # tags
+  tags = {
+    Name = "demo-instance-sg-${var.project_name}-${var.environment}"
+  }
+}
 
 # instances
 # demo instance 
 resource "aws_instance" "demo_instance" {
-  ami           = var.demo_instance_ami
-  instance_type = var.demo_instance_type
+  ami                    = var.demo_instance_ami
+  instance_type          = var.demo_instance_type
+  vpc_security_group_ids = [aws_security_group.ec2_security_group.id]
+  key_name               = aws_key_pair.ec2_key_pair.key_name
+
+#   user_data = <<-EOF
+#                 #!/bin/bash
+#                 yum update -y
+#                 yum install -y httpd
+#                 systemctl start httpd
+#                 systemctl enable httpd
+#                 echo "<h1> hello world! </h1>" > /var/www/html/index.html
+#                 EOF
 
   tags = {
     Name = "${var.demo_instance_prefix}-${var.project_name}-${var.environment}"

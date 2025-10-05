@@ -32,41 +32,41 @@ module "budgets" {
   limit_cost_currency = var.limit_cost_currency
   budget_alerts_arn   = module.sns.budget_alerts_arn
 }
-# lambda functions
-module "lambda" {
-  # source
-  source = "../../modules/compute/lambda"
+# # lambda functions
+# module "lambda" {
+#   # source
+#   source = "../../modules/compute/lambda"
 
-  # variables
-  crud_handler_name  = var.crud_handler_name
-  environment        = var.environment
-  project_name       = var.project_name
-  runtime            = var.runtime
-  region             = var.region
-  user_table_name    = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
-  dynamo_db_iam_role = module.dynamoDB.dynamo_db_iam_role
-}
-# dynamo db
-module "dynamoDB" {
-  # source
-  source = "../../modules/storage/dynamoDB"
+#   # variables
+#   crud_handler_name  = var.crud_handler_name
+#   environment        = var.environment
+#   project_name       = var.project_name
+#   runtime            = var.runtime
+#   region             = var.region
+#   user_table_name    = "${var.user_data_table_name}-${var.project_name}-${var.environment}"
+#   dynamo_db_iam_role = module.dynamoDB.dynamo_db_iam_role
+# }
+# # dynamo db
+# module "dynamoDB" {
+#   # source
+#   source = "../../modules/storage/dynamoDB"
 
-  # variables
-  environment          = var.environment
-  project_name         = var.project_name
-  user_data_table_name = var.user_data_table_name
-}
-# api gateway
-module "api_gateway" {
-  # source
-  source = "../../modules/miscellaneous_services/api_gateway"
+#   # variables
+#   environment          = var.environment
+#   project_name         = var.project_name
+#   user_data_table_name = var.user_data_table_name
+# }
+# # api gateway
+# module "api_gateway" {
+#   # source
+#   source = "../../modules/miscellaneous_services/api_gateway"
 
-  # variables
-  environment          = var.environment
-  project_name         = var.project_name
-  lambda_functions_map = module.lambda.lambda_functions_map
-  crud_handler_name    = var.crud_handler_name
-}
+#   # variables
+#   environment          = var.environment
+#   project_name         = var.project_name
+#   lambda_functions_map = module.lambda.lambda_functions_map
+#   crud_handler_name    = var.crud_handler_name
+# }
 # resource explorer
 module "resource_exporer" {
   # source
