@@ -76,16 +76,42 @@ module "resource_exporer" {
 }
 
 #EC2 instaces
-# module "ec2" {
-#   # source 
-#   source = "../../modules/compute/ec2"
+module "ec2" {
+  # source 
+  source = "../../modules/compute/ec2"
 
-#   # variables
-#   #globals
-#   environment = var.environment
-#   project_name = var.project_name
-#   #demo instance
-#   demo_instance_ami    = var.demo_instance_ami
-#   demo_instance_prefix = var.demo_instance_prefix
-#   demo_instance_type   = var.demo_instance_type
-# }
+  # variables
+  #globals
+  environment = var.environment
+  project_name = var.project_name
+  #demo instance
+  demo_instance_ami    = var.demo_instance_ami
+  demo_instance_prefix = var.demo_instance_prefix
+  demo_instance_type   = var.demo_instance_type
+  security_group_id    = module.security_groups.security_groups["ec2"].id
+}
+
+# RDS 
+module "rds" {
+  #source
+  source = "../../modules/storage/rds"
+
+  # variables
+  demo_db_identifier = var.demo_db_identifier
+  demo_db_username   = var.demo_db_username
+  demo_db_password   = var.demo_db_password
+  environment        = var.environment
+  project_name       = var.project_name
+  security_group_id  = module.security_groups.security_groups["rds"].id
+}
+
+module "security_groups" {
+  # sources
+  source = "../../modules/network/security_groups"
+
+  # variables
+  demo_db_identifier = var.demo_db_identifier
+  project_name         = var.project_name
+  environment          = var.environment
+  demo_instance_prefix = var.demo_instance_prefix
+}

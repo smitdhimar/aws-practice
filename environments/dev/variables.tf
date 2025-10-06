@@ -88,3 +88,17 @@ variable "demo_instance_type" {
   description = "The instance type of demo instance "
   type        = string
 }
+
+#RDS
+variable "demo_db_identifier" {
+  description = "demo db identifier"
+  type = string
+}
+variable "demo_db_password" {
+  description = "demo database password"
+  type = string
+}
+variable "demo_db_username" {
+  description = "demo database username"
+  type = string
+}
