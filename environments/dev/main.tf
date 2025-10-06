@@ -76,16 +76,16 @@ module "resource_exporer" {
 }
 
 #EC2 instaces
-module "ec2" {
-  # source 
-  source = "../../modules/compute/ec2"
+# module "ec2" {
+#   # source 
+#   source = "../../modules/compute/ec2"
 
-  # variables
-  #globals
-  environment = var.environment
-  project_name = var.project_name
-  #demo instance
-  demo_instance_ami    = var.demo_instance_ami
-  demo_instance_prefix = var.demo_instance_prefix
-  demo_instance_type   = var.demo_instance_type
-}
+#   # variables
+#   #globals
+#   environment = var.environment
+#   project_name = var.project_name
+#   #demo instance
+#   demo_instance_ami    = var.demo_instance_ami
+#   demo_instance_prefix = var.demo_instance_prefix
+#   demo_instance_type   = var.demo_instance_type
+# }
