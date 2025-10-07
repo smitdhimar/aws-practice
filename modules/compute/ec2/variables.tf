@@ -24,3 +24,7 @@ variable "security_group_id" {
   description = "The id of the security group"
   type        = string
 }
+variable "demo_instance_state" {
+  description = "The state of the demo instance"
+  type        = string
+}

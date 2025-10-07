@@ -1,7 +1,7 @@
 resource "aws_db_instance" "demo_db" {
   allocated_storage    = 1
   engine               = "mysql"
-  engine_version       = "8.0.32"
+  engine_version       = "8.0"
   instance_class       = "db.t3.micro"
   identifier           = var.demo_db_identifier
   username             = var.demo_db_username

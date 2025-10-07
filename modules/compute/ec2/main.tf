@@ -34,5 +34,5 @@ resource "aws_instance" "demo_instance" {
 #instance state
 resource "aws_ec2_instance_state" "demo_instance_state" {
   instance_id = aws_instance.demo_instance.id
-  state       = "stopped"
+  state       = var.demo_instance_state
 }

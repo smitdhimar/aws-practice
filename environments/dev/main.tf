@@ -82,12 +82,13 @@ module "ec2" {
 
   # variables
   #globals
-  environment = var.environment
+  environment  = var.environment
   project_name = var.project_name
   #demo instance
   demo_instance_ami    = var.demo_instance_ami
   demo_instance_prefix = var.demo_instance_prefix
   demo_instance_type   = var.demo_instance_type
+  demo_instance_state  = var.demo_instance_state
   security_group_id    = module.security_groups.security_groups["ec2"].id
 }
 
@@ -110,7 +111,7 @@ module "security_groups" {
   source = "../../modules/network/security_groups"
 
   # variables
-  demo_db_identifier = var.demo_db_identifier
+  demo_db_identifier   = var.demo_db_identifier
   project_name         = var.project_name
   environment          = var.environment
   demo_instance_prefix = var.demo_instance_prefix
