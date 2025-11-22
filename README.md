@@ -55,7 +55,7 @@ root/
 ├── .gitignore
 └── Makefile
 ```
-# Installation
+# Installation and working commands
 1) Terraform
 2) AWS account and IAM user setup
 3) terraform init
